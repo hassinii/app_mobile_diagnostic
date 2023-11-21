@@ -18,7 +18,7 @@ import GetPremium from "./GetPremium";
 import Home from "./Home";
 import RateApp from "./RateApp";
 import Settings from "./Settings";
-import Timer from "./Timer";
+import Profil from "./Profil";
 
 
 
@@ -31,7 +31,7 @@ export default function Drawer() {
         drawerContent={
           (props) => {
             return (
-              <SafeAreaView>
+              <SafeAreaView >
                 <View
                   style={{
                     height: 200,
@@ -43,7 +43,7 @@ export default function Drawer() {
                   }}
                 >
                   <Image
-                    // source={User}
+                     source={require('./medecin.png')}
                     style={{
                       height: 130,
                       width: 130,
@@ -57,13 +57,13 @@ export default function Drawer() {
                       fontWeight: "bold",
                       color: "#111"
                     }}
-                  >Isabella Joanna</Text>
+                  >HASSINI YASSINE</Text>
                   <Text
                     style={{
                       fontSize: 16,
                       color: "#111"
                     }}
-                  >Product Manager</Text>
+                  >Medcin</Text>
                 </View>
                 <DrawerItemList {...props} />
               </SafeAreaView>
@@ -99,15 +99,15 @@ export default function Drawer() {
           component={Home}
         />
         <Drawer.Screen
-          name="Timer"
+          name="Profil"
           options={{
-            drawerLabel: "Timer",
-            title: "Timer",
+            drawerLabel: "Profil",
+            title: "Profil",
             drawerIcon: () => (
-              <MaterialIcons name="timer" size={20} color="#808080" />
+              <MaterialIcons name="person" size={20} color="#808080" />
             )
           }}
-          component={Timer}
+          component={Profil}
         />
         <Drawer.Screen
           name="Categories"

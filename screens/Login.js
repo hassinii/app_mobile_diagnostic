@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.3)', // Couleur d'arrière-plan de la vue
   },
   largeInput: {
-    width: '1000%', // Ajustez la largeur selon vos besoins
+    width: '100%', // Ajustez la largeur selon vos besoins
   },
 
 
