@@ -12,31 +12,38 @@ import {
   TouchableOpacity,
   TextInput, ImageBackground
 } from 'react-native';
+import axios from "axios";
+import {jwtDecode} from 'jwt-decode';
+import { decode as base64Decode } from 'base-64';
 
-
+import jwt_decode from "jwt-decode";
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
-  const handleSignIn = () => {
-    //logique de login 
-    if (username === 'hassini' && password === '1234') {
-      // Stocker une valeur dans le Local Storage
-      const authentifier = async () => {
-        try {
-          await AsyncStorage.setItem('maValeur', 'jwt token ');
+  const [showError, setError] = useState(false)
+  const api = 'http://192.168.137.1:8080'
+  const dataUser ={
+    "username":"lachgar",
+    "password":"admin"
+  }
+  const handleSignIn = async () => {
+    let response = await axios.post(api+"/api/authenticate",dataUser)
+        .then(response =>{
+          const token = response.data.id_token;
+          const object = JSON.parse(atob(token.split('.')[1]))
+          if (object.auth ==="ROLE_DERMATOLOGUE"){
+            navigation.navigate("Drawer");
+          }
+          else {
+            alert("this application is dedicated to doctors")
+          }
 
-
-        }
-        catch (error) {
-          console.log('erreur lors de authentification', error)
-        }
-      }
-      navigation.navigate("Drawer");
-    } else {
-      // Gérer une connexion incorrecte ici, par exemple, en affichant un message d'erreur.
-      alert('Nom d\'utilisateur ou mot de passe incorrect');
-    }
+        })
+        .catch(error =>{
+          console.log(error)
+          setError(true)
+        })
 
   };
 
@@ -81,7 +88,11 @@ export default function Login() {
                 onChangeText={(text) => setPassword(text)}
                 style={[styles.inputControl, styles.largeInput]}
               />
+              {showError && <Text style={styles.message}>
+                Username or password incorrect
+              </Text>}
             </View>
+
 
             <View style={styles.formAction}>
               <TouchableOpacity
@@ -99,6 +110,11 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
+  message:{
+    color:'red',
+    fontSize:30,
+    textAlign:"center",
+  },
   container: {
     padding: 24,
     flexGrow: 1,
@@ -212,7 +228,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.3)', // Couleur d'arrière-plan de la vue
   },
   largeInput: {
-    width: '100%', // Ajustez la largeur selon vos besoins
+    width: '100%', 
   },
 
 
